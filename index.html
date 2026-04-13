@@ -24,28 +24,20 @@
     }
     .branche-grid { grid-template-columns: 1fr 1fr; }
   </style>
-  <!-- Usercentrics: EURE_SETTINGS_ID unten durch eure echte Settings-ID ersetzen -->
   <script id="usercentrics-cmp" src="https://web.cmp.usercentrics.eu/ui/loader.js" data-settings-id="i-OW_OGmKJjg4h" async></script>
-
-  <!-- Meta Pixel Code – blockiert bis Usercentrics-Consent -->
-  <script type="text/plain" data-usercentrics="Facebook Pixel">
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '107346186341327');
-  fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=107346186341327&ev=PageView&noscript=1"
-  /></noscript>
-  <!-- End Meta Pixel Code -->
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-W385QDX');</script>
+  <!-- End Google Tag Manager -->
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W385QDX"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <div id="root"></div>
 <script type="text/babel">
 const { useState } = React;
@@ -120,12 +112,37 @@ function PB({current,total}){return<div style={{marginBottom:28}}><div style={{d
 
 const Btn=({children,onClick,full,secondary,disabled,blue:bl})=><button onClick={onClick} disabled={disabled} style={{background:secondary?"transparent":disabled?"#ccc":bl?C.blue:C.accent,color:secondary?C.muted:"#FFF",borderRadius:8,padding:secondary?"12px":full?"16px 0":"16px 44px",fontSize:secondary?14:full?16:17,fontWeight:secondary?400:600,width:full?"100%":"auto",textDecoration:secondary?"underline":"none",transition:"background .2s",fontFamily:"inherit",opacity:disabled?.5:1,minHeight:full?52:"auto"}} onMouseOver={e=>{if(!secondary&&!disabled)e.target.style.background=bl?"#3A6BC4":C.accentHover}} onMouseOut={e=>{if(!secondary&&!disabled)e.target.style.background=bl?C.blue:C.accent}}>{children}</button>;
 
+const _UTM=(()=>{const r={};new URLSearchParams(window.location.search).forEach((v,k)=>{r[k.toLowerCase()]=v;});return r;})();
+
 function App(){
 const[_step,_setStep]=useState("hero");
 const setStep=(s)=>{
 if(typeof fbq==='function'&&(s==='result'||s==='resultDeep')&&!window._dubLeadFired){
 fbq('track','Lead',{content_name:'Contact Form',status:'submitted'});
 window._dubLeadFired=true;}
+if((s==='result'||s==='resultDeep')&&!window._dubGtmLeadFired){
+window.dataLayer=window.dataLayer||[];
+window.dataLayer.push({'event':'form_submit_lead'});
+window._dubGtmLeadFired=true;}
+if((s==='result'||s==='resultDeep')&&!window._dubHsResult&&email.trim()){
+window._dubHsResult=true;
+const vr=doCalc({br:BRANCHEN.find(b=>b.id===br),sz,ebit:pN(ebit),um:pN(um),inh,kun,tr,lief,zuk,deep:s==='resultDeep',rec,invS,e23,e24,e25:e25||ebit,gB,gBe,mG,sub});
+fetch("https://api.hsforms.com/submissions/v3/integration/submit/4804905/e157bf3d-d4c9-44ee-80c8-27315fb500ff",{
+method:"POST",headers:{"Content-Type":"application/json"},
+body:JSON.stringify({fields:[
+{name:"email",value:email.trim()},
+{name:"wertrechner_branche",value:BRANCHEN.find(b=>b.id===br)?.label||""},
+{name:"wertrechner_groesse",value:sz||""},
+{name:"wertrechner_umsatz",value:String(pN(um)||"")},
+{name:"wertrechner_ebit",value:String(pN(ebit)||"")},
+{name:"wertrechner_ergebnis_min",value:vr?String(vr.cR.l):""},
+{name:"wertrechner_ergebnis_max",value:vr?String(vr.cR.h):""},
+{name:"wertrechner_konfidenz",value:vr?String(vr.conf):""},
+{name:"wertrechner_modus",value:(e25||e23)?"vertieft":"schnell"},
+{name:"wertrechner_quelle",value:[_UTM.utm_source,sourceText.trim()].filter(Boolean).join(", ")},
+{name:"quelle_kontakt",value:"DUB Wertrechner"}
+],context:{pageUri:window.location.href,pageName:"DUB Unternehmenswertrechner"}})
+}).catch(()=>{});}
 _setStep(s);window.scrollTo(0,0);};
 const step=_step;
 const[br,setBr]=useState(null),[sz,setSz]=useState(null),[ebit,setEbit]=useState(""),[um,setUm]=useState("");
@@ -134,7 +151,7 @@ const[bH,sBH]=useState(null),[sT,sST]=useState("");
 const[e23,sE23]=useState(""),[e24,sE24]=useState(""),[e25,sE25]=useState("");
 const[gB,sGB]=useState(null),[gBe,sGBe]=useState(""),[mG,sMG]=useState("");
 const[rec,sRec]=useState(null),[invS,sInvS]=useState(null),[sub,sSub]=useState("");
-const[email,sEm]=useState(""),[consent,setCon]=useState(false),[cQ,sCQ]=useState(0),[ans,sAns]=useState([]),[sel,sSel]=useState(null),[hov,sHov]=useState(null);
+const[anrede,sAnrede]=useState(""),[vorname,sVorname]=useState(""),[nachname,sNachname]=useState(""),[email,sEm]=useState(""),[sourceText,setSrcTxt]=useState(""),[consent,setCon]=useState(false),[cQ,sCQ]=useState(0),[ans,sAns]=useState([]),[sel,sSel]=useState(null),[hov,sHov]=useState(null);
 const tS=ans.reduce((s,a)=>s+a,0);
 const sB=BRANCHEN.find(b=>b.id===br);const m=getM(sB,sz);const noD=sB&&sz&&!m;
 const fB=sT.trim()?BRANCHEN.filter(b=>b.label.toLowerCase().includes(sT.toLowerCase())):BRANCHEN;
@@ -144,7 +161,7 @@ const gV=(deep)=>doCalc({br:sB,sz,ebit:eN,um:uN,inh,kun,tr,lief,zuk,deep,rec,inv
 const qR=step==="result"?gV(false):null;
 const dR=step==="resultDeep"?gV(true):null;
 const aR=dR||qR;
-const lR=(()=>{if(["checkResult","email","check"].includes(step)){return(e25||e23)?gV(true):gV(false)}return null})();
+const lR=(()=>{if(["checkResult","check","email"].includes(step)){return(e25||e23)?gV(true):gV(false)}return null})();
 
 return<div style={{background:C.bg,minHeight:"100vh"}}>
 <nav style={{padding:"12px 32px",display:"flex",justifyContent:"space-between",alignItems:"center",borderBottom:`1px solid ${C.border}`}}>
@@ -189,6 +206,8 @@ return<div style={{background:C.bg,minHeight:"100vh"}}>
 <IF label="Jährlicher Gewinn vor Steuern und Zinsen (EBIT)" hint="Diesen Wert finden Sie in Ihrer BWA unter ‚Betriebsergebnis' oder fragen Sie Ihren Steuerberater." value={fmtI(ebit)} onChange={e=>setEbit(e.target.value)} suffix="€ / Jahr"/>
 <div style={{display:"flex",gap:10,marginTop:8}}><Btn onClick={()=>setStep("r1")} secondary>Zurück</Btn><div style={{flex:1}}><Btn onClick={()=>setStep("r3")} full disabled={eN<=0}>Weiter</Btn></div></div></>}
 
+
+
 {step==="r3"&&<><SI current={2} total={3} label="Schnellcheck"/>
 <h2 style={{fontSize:20,fontWeight:600,marginBottom:22}}>Qualitative Faktoren</h2>
 <div style={{marginBottom:22}}><p style={{fontSize:15,fontWeight:500,marginBottom:8}}>Inhaberabhängigkeit</p>
@@ -201,7 +220,7 @@ return<div style={{background:C.bg,minHeight:"100vh"}}>
 <RG value={lief} onChange={setLief} options={[{value:"breit",label:"Breit aufgestellt",desc:"Viele austauschbare Lieferanten"},{value:"einige",label:"Einige wichtige Lieferanten"},{value:"konzentriert",label:"Stark abhängig von 1–2 Lieferanten"}]}/></div>
 <div style={{marginBottom:22}}><p style={{fontSize:15,fontWeight:500,marginBottom:8}}>Erwartete Entwicklung im kommenden Jahr</p>
 <RG value={zuk} onChange={setZuk} options={[{value:"wachsend",label:"Umsatz und Gewinn steigen voraussichtlich"},{value:"stabil",label:"Voraussichtlich auf gleichem Niveau"},{value:"rückläufig",label:"Eher rückläufig"}]}/></div>
-<div style={{display:"flex",gap:10}}><Btn onClick={()=>setStep("r2")} secondary>Zurück</Btn><div style={{flex:1}}><Btn onClick={()=>setStep("result")} full disabled={!inh||!kun||!tr||!lief||!zuk}>Wert berechnen</Btn></div></div></>}
+<div style={{display:"flex",gap:10}}><Btn onClick={()=>setStep("r2")} secondary>Zurück</Btn><div style={{flex:1}}><Btn onClick={()=>setStep("email")} full disabled={!inh||!kun||!tr||!lief||!zuk}>Wert berechnen</Btn></div></div></>}
 
 {step==="result"&&qR&&<>
 <div style={{textAlign:"center",marginBottom:20}}>
@@ -210,8 +229,8 @@ return<div style={{background:C.bg,minHeight:"100vh"}}>
 <p style={{fontSize:12,color:C.muted}}>{sB.label} · {qR.isEB?"EBITDA":"EBIT"}-Multiple {qR.mL}x – {qR.mH}x</p></div>
 <CM value={qR.conf}/>
 <div style={{background:C.surface,borderRadius:8,padding:20,marginBottom:16}}>
-<RB label={`${qR.isEB?"EBITDA":"EBIT"}-Methode`} low={qR.eR.l} high={qR.eR.h} color={C.accent} mx={qR.cR.h*1.3}/>
-{qR.uR&&<RB label="Umsatz-Methode" low={qR.uR.l} high={qR.uR.h} color={C.blue} mx={qR.cR.h*1.3}/>}</div>
+<RB label={`${qR.isEB?"EBITDA":"EBIT"}-Methode`} low={qR.eR.l} high={qR.eR.h} color={C.accent} mx={Math.max(qR.eR.h,qR.uR?qR.uR.h:0,qR.cR.h)*1.3}/>
+{qR.uR&&<RB label="Umsatz-Methode" low={qR.uR.l} high={qR.uR.h} color={C.blue} mx={Math.max(qR.eR.h,qR.uR.h,qR.cR.h)*1.3}/>}</div>
 <div style={{background:C.blueLight,borderRadius:8,padding:"22px 20px",marginBottom:20,borderLeft:`3px solid ${C.blue}`}}>
 <p style={{fontSize:15,fontWeight:600,marginBottom:6}}>Genauere Bewertung gewünscht?</p>
 <p style={{fontSize:14,color:C.muted,margin:"0 0 16px",lineHeight:1.6}}>Mehrjahres-Gewinn, GF-Gehalt, Umsatzstruktur, Investitionsbedarf, Substanzwert – ca. 2 Min. extra.</p>
@@ -220,7 +239,7 @@ return<div style={{background:C.bg,minHeight:"100vh"}}>
 <p style={{fontSize:15,fontWeight:600,marginBottom:6}}>Sie kennen jetzt den Wert – wie steht es um die Nachfolge?</p>
 <p style={{fontSize:14,color:C.muted,margin:"0 0 14px",lineHeight:1.6}}>Der Zukunfts-Check zeigt Ihnen in 8 Fragen, wie gut Sie und Ihr Unternehmen auf eine Übergabe vorbereitet sind.</p>
 <Btn onClick={()=>{setStep("check");sCQ(0);sAns([]);sSel(null)}} full>Zukunfts-Check starten</Btn></div>
-<div style={{textAlign:"center"}}><Btn onClick={()=>{sAns([]);setStep("email")}} secondary>Zukunfts-Check überspringen</Btn></div></>}
+<div style={{textAlign:"center"}}><Btn onClick={()=>{sAns([]);setStep("checkResult")}} secondary>Zukunfts-Check überspringen</Btn></div></>}
 
 {step==="d1"&&<><SI current={0} total={3} label="Vertiefte Analyse"/>
 <h2 style={{fontSize:20,fontWeight:600,marginBottom:6}}>Gewinnentwicklung & GF-Gehalt</h2>
@@ -273,46 +292,59 @@ return<div style={{background:C.bg,minHeight:"100vh"}}>
 <p style={{fontSize:15,fontWeight:600,marginBottom:6}}>Sie kennen jetzt den Wert – wie steht es um die Nachfolge?</p>
 <p style={{fontSize:14,color:C.muted,margin:"0 0 14px",lineHeight:1.6}}>8 Fragen, wie gut Sie und Ihr Unternehmen auf eine Übergabe vorbereitet sind.</p>
 <Btn onClick={()=>{setStep("check");sCQ(0);sAns([]);sSel(null)}} full>Zukunfts-Check starten</Btn></div>
-<div style={{textAlign:"center"}}><Btn onClick={()=>{sAns([]);setStep("email")}} secondary>Zukunfts-Check überspringen</Btn></div></>}
+<div style={{textAlign:"center"}}><Btn onClick={()=>{sAns([]);setStep("checkResult")}} secondary>Zukunfts-Check überspringen</Btn></div></>}
 
-{step==="email"&&(()=>{const validEmail=email.trim().length>4&&email.includes("@")&&email.includes(".");return<><div style={{textAlign:"center"}}>
+{step==="email"&&(()=>{const validEmail=email.trim().length>4&&email.includes("@")&&email.includes(".");const validForm=validEmail&&anrede&&vorname.trim()&&nachname.trim();return<><div style={{textAlign:"center"}}>
 <div style={{margin:"0 auto 20px",display:"flex",justifyContent:"center"}}><Ico d={iLk} size={36} color={C.accent}/></div>
-<h2 style={{fontSize:20,fontWeight:600,marginBottom:8}}>Ihr Ergebnis ist fertig</h2>
-<p style={{color:C.muted,fontSize:16,marginBottom:24,lineHeight:1.6}}>Tragen Sie Ihre E-Mail-Adresse ein, um Ihr<br/>vollständiges Ergebnis mit persönlichen<br/>Empfehlungen zu sehen.</p>
-<input type="email" placeholder="ihre@email.de" value={email} onChange={e=>sEm(e.target.value)} style={{width:"100%",padding:"14px 16px",fontSize:16,borderRadius:8,border:`1px solid ${C.border}`,marginBottom:16,boxSizing:"border-box",fontFamily:"inherit"}} onFocus={e=>e.target.style.borderColor=C.accent} onBlur={e=>e.target.style.borderColor=C.border}/>
+<h2 style={{fontSize:20,fontWeight:600,marginBottom:8}}>Fast fertig!</h2>
+<p style={{color:C.muted,fontSize:16,marginBottom:24,lineHeight:1.6}}>Tragen Sie Ihre Kontaktdaten ein, um Ihr<br/>persönliches Bewertungsergebnis<br/>zu erhalten.</p>
+<select value={anrede} onChange={e=>sAnrede(e.target.value)} style={{width:"100%",padding:"14px 16px",fontSize:15,borderRadius:8,border:`1px solid ${C.border}`,marginBottom:12,boxSizing:"border-box",fontFamily:"inherit",color:anrede?C.text:C.muted,background:C.bg,appearance:"none",backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")`,backgroundRepeat:"no-repeat",backgroundPosition:"right 16px center"}}>
+<option value="">Anrede</option>
+<option value="Herr">Herr</option>
+<option value="Frau">Frau</option>
+<option value="Divers">Divers</option>
+</select>
+<div style={{display:"flex",gap:10,marginBottom:12}}>
+<input type="text" placeholder="Vorname" value={vorname} onChange={e=>sVorname(e.target.value)} style={{flex:1,padding:"14px 16px",fontSize:15,borderRadius:8,border:`1px solid ${C.border}`,boxSizing:"border-box",fontFamily:"inherit"}} onFocus={e=>e.target.style.borderColor=C.accent} onBlur={e=>e.target.style.borderColor=C.border}/>
+<input type="text" placeholder="Nachname" value={nachname} onChange={e=>sNachname(e.target.value)} style={{flex:1,padding:"14px 16px",fontSize:15,borderRadius:8,border:`1px solid ${C.border}`,boxSizing:"border-box",fontFamily:"inherit"}} onFocus={e=>e.target.style.borderColor=C.accent} onBlur={e=>e.target.style.borderColor=C.border}/>
+</div>
+<input type="email" placeholder="ihre@email.de" value={email} onChange={e=>sEm(e.target.value)} style={{width:"100%",padding:"14px 16px",fontSize:16,borderRadius:8,border:`1px solid ${C.border}`,marginBottom:12,boxSizing:"border-box",fontFamily:"inherit"}} onFocus={e=>e.target.style.borderColor=C.accent} onBlur={e=>e.target.style.borderColor=C.border}/>
+<select value={sourceText} onChange={e=>setSrcTxt(e.target.value)} style={{width:"100%",padding:"14px 16px",fontSize:15,borderRadius:8,border:`1px solid ${C.border}`,marginBottom:16,boxSizing:"border-box",fontFamily:"inherit",color:sourceText?C.text:C.muted,background:C.bg,appearance:"none",backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")`,backgroundRepeat:"no-repeat",backgroundPosition:"right 16px center"}}>
+<option value="">Wie sind Sie auf uns aufmerksam geworden?</option>
+<option value="Facebook">Facebook</option>
+<option value="Instagram">Instagram</option>
+<option value="Google">Google</option>
+<option value="Kleinanzeigen">Kleinanzeigen</option>
+<option value="Andere">Andere</option>
+</select>
 <label style={{display:"flex",gap:10,alignItems:"flex-start",textAlign:"left",cursor:"pointer",marginBottom:20}}>
 <input type="checkbox" checked={consent} onChange={e=>setCon(e.target.checked)} style={{marginTop:3,width:18,height:18,flexShrink:0,accentColor:C.accent,cursor:"pointer"}}/>
 <span style={{fontSize:13,color:C.muted,lineHeight:1.5}}>Durch die Angabe Ihrer E-Mail-Adresse stimmen Sie zu, dass Ihnen die Deutsche Unternehmerbörse DUB.de GmbH weitere Informationen zusenden darf. Diese Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen. Weitere Informationen finden Sie in unseren <a href="https://www.dub.de/datenschutz/" target="_blank" rel="noopener noreferrer" style={{color:C.accent}}>Datenschutzhinweisen</a>.</span>
 </label>
 <Btn onClick={()=>{
-const vr=lR||qR;
-const hsFields=[
-{name:"email",value:email.trim()},
-{name:"wertrechner_branche",value:sB?sB.label:""},
-{name:"wertrechner_groesse",value:sz||""},
-{name:"wertrechner_umsatz",value:String(uN||"")},
-{name:"wertrechner_ebit",value:String(eN||"")},
-{name:"wertrechner_ergebnis_min",value:vr?String(vr.cR.l):""},
-{name:"wertrechner_ergebnis_max",value:vr?String(vr.cR.h):""},
-{name:"wertrechner_konfidenz",value:vr?String(vr.conf):""},
-{name:"wertrechner_zukunftscheck",value:ans.length===8?String(Math.round(tS/32*100)):""},
-{name:"wertrechner_modus",value:(e25||e23)?"vertieft":"schnell"},
-{name:"quelle_kontakt",value:"DUB Wertrechner"}
-];
 fetch("https://api.hsforms.com/submissions/v3/integration/submit/4804905/e157bf3d-d4c9-44ee-80c8-27315fb500ff",{
 method:"POST",headers:{"Content-Type":"application/json"},
-body:JSON.stringify({fields:hsFields,context:{pageUri:window.location.href,pageName:"DUB Unternehmenswertrechner"}})
+body:JSON.stringify({fields:[
+{name:"email",value:email.trim()},
+{name:"salutation",value:anrede},
+{name:"firstname",value:vorname.trim()},
+{name:"lastname",value:nachname.trim()},
+{name:"wertrechner_branche",value:sB?sB.label:""},
+{name:"wertrechner_groesse",value:sz||""},
+{name:"wertrechner_quelle",value:[_UTM.utm_source,sourceText.trim()].filter(Boolean).join(", ")},
+{name:"quelle_kontakt",value:"DUB Wertrechner"}
+],context:{pageUri:window.location.href,pageName:"DUB Unternehmenswertrechner"}})
 }).catch(()=>{});
 if(typeof fbq==='function')fbq('track','SubmitApplication',{content_name:'Email Gate',status:'submitted'});
-setStep("checkResult");
-}} full disabled={!validEmail||!consent}>Ergebnis anzeigen</Btn>
+setStep("result");
+}} full disabled={!validForm||!consent}>Weiter zur Bewertung</Btn>
 <p style={{fontSize:13,color:C.muted,marginTop:14,display:"flex",alignItems:"center",justifyContent:"center",gap:4}}><Ico d={iSh} size={12}/> Ihre Daten werden nicht an Käufer oder Berater weitergegeben.</p></div></>;})()}
 
 {step==="check"&&<><PB current={cQ} total={8}/>
 <h2 style={{fontSize:19,fontWeight:600,marginBottom:24,lineHeight:1.45}}>{questions[cQ].q}</h2>
 <div style={{display:"flex",flexDirection:"column",gap:10}}>
 {questions[cQ].opts.map((o,i)=><button key={i} onClick={()=>sSel(i)} onMouseOver={()=>sHov(i)} onMouseOut={()=>sHov(null)} style={{background:sel===i?C.accentLight:hov===i?C.surface:C.bg,color:C.text,border:`1.5px solid ${sel===i?C.accent:C.border}`,borderRadius:8,padding:"14px 16px",fontSize:15,cursor:"pointer",textAlign:"left",transition:"all .15s",lineHeight:1.45,display:"flex",alignItems:"center",gap:12,fontFamily:"inherit",minHeight:48}}><span style={{width:20,height:20,borderRadius:"50%",flexShrink:0,border:`1.5px solid ${sel===i?C.accent:C.border}`,background:sel===i?C.accent:"transparent",display:"flex",alignItems:"center",justifyContent:"center",transition:"all .15s"}}>{sel===i&&<Ico d={iChk} size={10} color="#FFF"/>}</span>{o.text}</button>)}</div>
-{sel!==null&&<div style={{marginTop:18}}><Btn onClick={()=>{sAns([...ans,questions[cQ].opts[sel].score]);sSel(null);sHov(null);if(cQ<7)sCQ(cQ+1);else{if(typeof fbq==='function')fbq('track','CompleteRegistration',{content_name:'Zukunfts-Check',status:'completed'});setStep("email")}}} full>{cQ<7?"Weiter":"Ergebnis anzeigen"}</Btn></div>}</>}
+{sel!==null&&<div style={{marginTop:18}}><Btn onClick={()=>{sAns([...ans,questions[cQ].opts[sel].score]);sSel(null);sHov(null);if(cQ<7)sCQ(cQ+1);else{if(typeof fbq==='function')fbq('track','CompleteRegistration',{content_name:'Zukunfts-Check',status:'completed'});setStep("checkResult")}}} full>{cQ<7?"Weiter":"Ergebnis anzeigen"}</Btn></div>}</>}
 
 {step==="checkResult"&&(()=>{const ha=ans.length===8;const vr=lR||qR;const vs=vr?`${fmt(vr.cR.l)} – ${fmt(vr.cR.h)}`:"–";
 if(!ha){const skipRecs=getRecs({inh,kun,tr,lief,zuk,rec,invS,checkAns:[]});
