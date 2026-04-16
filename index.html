@@ -151,7 +151,7 @@ const[bH,sBH]=useState(null),[sT,sST]=useState("");
 const[e23,sE23]=useState(""),[e24,sE24]=useState(""),[e25,sE25]=useState("");
 const[gB,sGB]=useState(null),[gBe,sGBe]=useState(""),[mG,sMG]=useState("");
 const[rec,sRec]=useState(null),[invS,sInvS]=useState(null),[sub,sSub]=useState("");
-const[anrede,sAnrede]=useState(""),[vorname,sVorname]=useState(""),[nachname,sNachname]=useState(""),[email,sEm]=useState(""),[sourceText,setSrcTxt]=useState(""),[consent,setCon]=useState(false),[cQ,sCQ]=useState(0),[ans,sAns]=useState([]),[sel,sSel]=useState(null),[hov,sHov]=useState(null);
+const[anrede,sAnrede]=useState(""),[vorname,sVorname]=useState(""),[nachname,sNachname]=useState(""),[inhaber,sInhaber]=useState(""),[email,sEm]=useState(""),[sourceText,setSrcTxt]=useState(""),[consent,setCon]=useState(false),[cQ,sCQ]=useState(0),[ans,sAns]=useState([]),[sel,sSel]=useState(null),[hov,sHov]=useState(null);
 const tS=ans.reduce((s,a)=>s+a,0);
 const sB=BRANCHEN.find(b=>b.id===br);const m=getM(sB,sz);const noD=sB&&sz&&!m;
 const fB=sT.trim()?BRANCHEN.filter(b=>b.label.toLowerCase().includes(sT.toLowerCase())):BRANCHEN;
@@ -294,7 +294,7 @@ return<div style={{background:C.bg,minHeight:"100vh"}}>
 <Btn onClick={()=>{setStep("check");sCQ(0);sAns([]);sSel(null)}} full>Zukunfts-Check starten</Btn></div>
 <div style={{textAlign:"center"}}><Btn onClick={()=>{sAns([]);setStep("checkResult")}} secondary>Zukunfts-Check überspringen</Btn></div></>}
 
-{step==="email"&&(()=>{const validEmail=email.trim().length>4&&email.includes("@")&&email.includes(".");const validForm=validEmail&&anrede&&vorname.trim()&&nachname.trim();return<><div style={{textAlign:"center"}}>
+{step==="email"&&(()=>{const validEmail=email.trim().length>4&&email.includes("@")&&email.includes(".");const validForm=validEmail&&anrede&&vorname.trim()&&nachname.trim()&&inhaber;return<><div style={{textAlign:"center"}}>
 <div style={{margin:"0 auto 20px",display:"flex",justifyContent:"center"}}><Ico d={iLk} size={36} color={C.accent}/></div>
 <h2 style={{fontSize:20,fontWeight:600,marginBottom:8}}>Fast fertig!</h2>
 <p style={{color:C.muted,fontSize:16,marginBottom:24,lineHeight:1.6}}>Tragen Sie Ihre Kontaktdaten ein, um Ihr<br/>persönliches Bewertungsergebnis<br/>zu erhalten.</p>
@@ -308,7 +308,11 @@ return<div style={{background:C.bg,minHeight:"100vh"}}>
 <input type="text" placeholder="Vorname" value={vorname} onChange={e=>sVorname(e.target.value)} style={{flex:1,padding:"14px 16px",fontSize:15,borderRadius:8,border:`1px solid ${C.border}`,boxSizing:"border-box",fontFamily:"inherit"}} onFocus={e=>e.target.style.borderColor=C.accent} onBlur={e=>e.target.style.borderColor=C.border}/>
 <input type="text" placeholder="Nachname" value={nachname} onChange={e=>sNachname(e.target.value)} style={{flex:1,padding:"14px 16px",fontSize:15,borderRadius:8,border:`1px solid ${C.border}`,boxSizing:"border-box",fontFamily:"inherit"}} onFocus={e=>e.target.style.borderColor=C.accent} onBlur={e=>e.target.style.borderColor=C.border}/>
 </div>
-<input type="email" placeholder="ihre@email.de" value={email} onChange={e=>sEm(e.target.value)} style={{width:"100%",padding:"14px 16px",fontSize:16,borderRadius:8,border:`1px solid ${C.border}`,marginBottom:12,boxSizing:"border-box",fontFamily:"inherit"}} onFocus={e=>e.target.style.borderColor=C.accent} onBlur={e=>e.target.style.borderColor=C.border}/>
+<input type="email" placeholder="ihre@email.de" value={email} onChange={e=>sEm(e.target.value)} style={{width:"100%",padding:"14px 16px",fontSize:16,borderRadius:8,border:`1px solid ${C.border}`,marginBottom:16,boxSizing:"border-box",fontFamily:"inherit"}} onFocus={e=>e.target.style.borderColor=C.accent} onBlur={e=>e.target.style.borderColor=C.border}/>
+<p style={{fontSize:15,fontWeight:500,marginBottom:10,textAlign:"left"}}>Sind Sie Inhaber eines Unternehmens?</p>
+<div style={{display:"flex",gap:10,marginBottom:16}}>
+{["Ja","Nein"].map(opt=><button key={opt} type="button" onClick={()=>sInhaber(opt.toLowerCase())} style={{flex:1,padding:"13px",fontSize:15,borderRadius:8,border:`1.5px solid ${inhaber===opt.toLowerCase()?C.accent:C.border}`,background:inhaber===opt.toLowerCase()?C.accentLight:C.bg,fontFamily:"inherit",fontWeight:inhaber===opt.toLowerCase()?600:400,cursor:"pointer",transition:"all .15s"}}>{opt}</button>)}
+</div>
 <select value={sourceText} onChange={e=>setSrcTxt(e.target.value)} style={{width:"100%",padding:"14px 16px",fontSize:15,borderRadius:8,border:`1px solid ${C.border}`,marginBottom:16,boxSizing:"border-box",fontFamily:"inherit",color:sourceText?C.text:C.muted,background:C.bg,appearance:"none",backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")`,backgroundRepeat:"no-repeat",backgroundPosition:"right 16px center"}}>
 <option value="">Wie sind Sie auf uns aufmerksam geworden?</option>
 <option value="Facebook">Facebook</option>
@@ -331,6 +335,7 @@ body:JSON.stringify({fields:[
 {name:"lastname",value:nachname.trim()},
 {name:"wertrechner_branche",value:sB?sB.label:""},
 {name:"wertrechner_groesse",value:sz||""},
+{name:"wertrechner_inhaber",value:inhaber},
 {name:"wertrechner_quelle",value:[_UTM.utm_source,sourceText.trim()].filter(Boolean).join(", ")},
 {name:"quelle_kontakt",value:"DUB Wertrechner"}
 ],context:{pageUri:window.location.href,pageName:"DUB Unternehmenswertrechner"}})
