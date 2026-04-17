@@ -71,7 +71,7 @@ let conf=45;if(uL)conf+=10;if(p.deep){if(pN(p.e23||"")>0&&pN(p.e24||"")>0)conf+=
 conf=Math.min(95,conf);
 return{eR:{l:eL,h:eH},uR:uL?{l:uL,h:uH}:null,cR:{l:fL,h:fH},eE,eN,sV,mL:(m.ebit[0]*(1+tA)).toFixed(1),mH:(m.ebit[1]*(1+tA)).toFixed(1),mUL:m.umsatz?(m.umsatz[0]*(1+tA)).toFixed(2):null,mUH:m.umsatz?(m.umsatz[1]*(1+tA)).toFixed(2):null,isEB:m.isEbitda,qA,dA,tA,conf,deep:p.deep}}
 
-function getCR(s){const p=Math.round(s/32*100);if(p>=70)return{level:"Sehr gut vorbereitet",color:C.success,pct:p,msg:"Ihr Unternehmen ist hervorragend aufgestellt. Der nächste Schritt: Sichtbar werden für über 100.000 registrierte Nachfolge-Interessenten auf DUB.de.",cta:"Kostenlos sichtbar werden"};if(p>=45)return{level:"Guter Ausgangspunkt",color:C.accent,pct:p,msg:"Sie haben bereits wichtige Grundlagen geschaffen. Mit ein paar weiteren Schritten sind Sie optimal auf eine Nachfolge vorbereitet.",cta:"Kostenlos sichtbar werden"};return{level:"Erste Orientierung",color:C.accent,pct:p,msg:"Jeder Weg beginnt mit dem ersten Schritt, und den haben Sie gerade getan. Sich frühzeitig zu informieren ist der beste Ausgangspunkt für eine gelungene Nachfolge.",cta:"Kostenlos informieren"}}
+function getCR(s){const p=Math.round(s/32*100);if(p>=70)return{level:"Sehr gut vorbereitet",color:C.success,pct:p,msg:"Ihr Unternehmen ist hervorragend aufgestellt. Der nächste Schritt: Sichtbar werden für über 90.000 registrierte Nachfolge-Interessenten auf DUB.de.",cta:"Kostenlos sichtbar werden"};if(p>=45)return{level:"Guter Ausgangspunkt",color:C.accent,pct:p,msg:"Sie haben bereits wichtige Grundlagen geschaffen. Mit ein paar weiteren Schritten sind Sie optimal auf eine Nachfolge vorbereitet.",cta:"Kostenlos sichtbar werden"};return{level:"Erste Orientierung",color:C.accent,pct:p,msg:"Jeder Weg beginnt mit dem ersten Schritt, und den haben Sie gerade getan. Sich frühzeitig zu informieren ist der beste Ausgangspunkt für eine gelungene Nachfolge.",cta:"Kostenlos informieren"}}
 
 function getRecs(p){const recs=[];
 if(p.inh==="hoch")recs.push({icon:"👤",title:"Inhaberabhängigkeit reduzieren",text:"Ihr Unternehmen hängt stark von Ihnen persönlich ab. Das ist der häufigste Grund für Wertabschläge bei Nachfolgeprozessen. Beginnen Sie frühzeitig damit, Aufgaben und Verantwortung an Ihr Team zu übergeben und Schlüsselprozesse zu dokumentieren. Ein Unternehmen, das auch ohne den Inhaber funktioniert, ist für Nachfolger deutlich attraktiver.",prio:1});
@@ -181,7 +181,7 @@ return<div style={{background:C.bg,minHeight:"100vh"}}>
 </div></section>
 <section style={{padding:"28px 24px",background:C.surface,borderTop:`1px solid ${C.border}`,borderBottom:`1px solid ${C.border}`}}>
 <div style={{display:"flex",justifyContent:"center",gap:56,flexWrap:"wrap",maxWidth:540,margin:"0 auto"}}>
-{[["100.000+","registrierte Nutzer"],["3.000+","Nachfolge-Angebote"],["100%","kostenlos"]].map(([v,l])=><div key={l} style={{textAlign:"center"}}><div style={{fontSize:28,fontWeight:700}}>{v}</div><div style={{fontSize:13,color:C.muted,marginTop:2}}>{l}</div></div>)}
+{[["90.000+","registrierte Nutzer"],["3.800+","Nachfolge-Angebote"],["100%","kostenlos"]].map(([v,l])=><div key={l} style={{textAlign:"center"}}><div style={{fontSize:28,fontWeight:700}}>{v}</div><div style={{fontSize:13,color:C.muted,marginTop:2}}>{l}</div></div>)}
 </div></section></>}
 
 {step!=="hero"&&<section style={{padding:"48px 24px",maxWidth:580,margin:"0 auto"}}>
@@ -362,7 +362,7 @@ return<><div style={{textAlign:"center"}}>
 {skipRecs.map((rc,i)=><div key={i} style={{padding:"12px 0",borderTop:`1px solid ${C.border}`}}><div style={{display:"flex",gap:10,alignItems:"flex-start"}}><span style={{fontSize:16,flexShrink:0,marginTop:1}}>{rc.icon}</span><div><p style={{fontSize:14,fontWeight:600,marginBottom:3}}>{rc.title}</p><p style={{fontSize:13,color:C.muted,lineHeight:1.55,margin:0}}>{rc.text}</p></div></div></div>)}
 </div>}
 <div style={{background:C.surface,borderRadius:8,padding:20,marginBottom:24,textAlign:"left",fontSize:15,lineHeight:1.7}}>
-<p style={{color:C.muted,margin:0}}>Machen Sie Ihr Unternehmen sichtbar für über 100.000 registrierte Nachfolge-Interessenten auf DUB.de. Kostenlos und unverbindlich.</p></div>
+<p style={{color:C.muted,margin:0}}>Machen Sie Ihr Unternehmen sichtbar für über 90.000 registrierte Nachfolge-Interessenten auf DUB.de. Kostenlos und unverbindlich.</p></div>
 <Btn onClick={()=>setStep("bridge")} full>Kostenlos sichtbar werden</Btn>
 <p style={{fontSize:13,color:C.muted,marginTop:14,display:"flex",alignItems:"center",justifyContent:"center",gap:4}}><Ico d={iSh} size={12}/> 100% kostenlos · Keine Verpflichtung · Jederzeit löschbar</p></div></>;
 }
@@ -380,7 +380,7 @@ return<><div style={{textAlign:"center"}}>
 <div style={{background:C.surface,borderRadius:8,padding:20,marginBottom:24,textAlign:"left",fontSize:14,lineHeight:1.7}}>
 <div style={{display:"flex",justifyContent:"space-between",marginBottom:8}}><span style={{color:C.muted}}>Unternehmenswert</span><span style={{fontWeight:600}}>{vs}</span></div>
 <div style={{display:"flex",justifyContent:"space-between",marginBottom:12,paddingBottom:12,borderBottom:`1px solid ${C.border}`}}><span style={{color:C.muted}}>Zukunfts-Bereitschaft</span><span style={{fontWeight:600,color:r.color}}>{r.pct}%</span></div>
-<p style={{fontSize:14,color:C.muted,margin:0}}>Nächster Schritt: Machen Sie Ihr Unternehmen sichtbar für über 100.000 registrierte Nachfolge-Interessenten auf DUB.de. Kostenlos.</p></div>
+<p style={{fontSize:14,color:C.muted,margin:0}}>Nächster Schritt: Machen Sie Ihr Unternehmen sichtbar für über 90.000 registrierte Nachfolge-Interessenten auf DUB.de. Kostenlos.</p></div>
 {(()=>{const recs=getRecs({inh,kun,tr,lief,zuk,rec,invS,checkAns:a});if(!recs.length)return null;const urgent=recs.filter(r=>r.prio<=2);const positive=recs.filter(r=>r.prio===3);return<div style={{marginBottom:24}}>
 <div style={{background:C.bg,borderRadius:8,border:`1px solid ${C.border}`,padding:20,marginBottom:0}}>
 <p style={{fontSize:16,fontWeight:600,marginBottom:4}}>Ihre persönlichen Empfehlungen</p>
