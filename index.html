@@ -131,6 +131,9 @@ fetch("https://api.hsforms.com/submissions/v3/integration/submit/4804905/e157bf3
 method:"POST",headers:{"Content-Type":"application/json"},
 body:JSON.stringify({fields:[
 {name:"email",value:email.trim()},
+{name:"salutation",value:anrede},
+{name:"firstname",value:vorname.trim()},
+{name:"lastname",value:nachname.trim()},
 {name:"wertrechner_branche",value:BRANCHEN.find(b=>b.id===br)?.label||""},
 {name:"wertrechner_groesse",value:sz||""},
 {name:"wertrechner_umsatz",value:String(pN(um)||"")},
