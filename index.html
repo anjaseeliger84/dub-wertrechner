@@ -332,7 +332,8 @@ body:JSON.stringify({fields:[
 {name:"wertrechner_groesse",value:sz||""},
 {name:"wertrechner_inhaber",value:inhaber},
 {name:"wertrechner_quelle",value:_UTM.utm_source||""},
-{name:"quelle_kontakt",value:"DUB Wertrechner"}
+{name:"quelle_kontakt",value:"DUB Wertrechner"},
+...(consent?[{name:"wertrechner_opt_in",value:"true"},{name:"wertrechner_opt_in_quelle",value:"DUB Wertrechner"},{name:"wertrechner_opt_in_datum_z",value:String(Date.now())}]:[])
 ],context:{pageUri:window.location.href,pageName:"DUB Unternehmenswertrechner"}})
 }).catch(()=>{});
 if(typeof fbq==='function')fbq('track','SubmitApplication',{content_name:'Email Gate',status:'submitted'});
