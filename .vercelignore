@@ -1,0 +1,8 @@
+# Production serviert nur index.html.
+# Vertrauliche/lokale Dateien NICHT deployen:
+*.docx
+*.png
+*.html
+!index.html
+.claude
+.DS_Store
