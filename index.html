@@ -29,6 +29,13 @@
     }
     .branche-grid { grid-template-columns: 1fr 1fr; }
   </style>
+  <!-- Google Consent Mode: Default = denied. Muss VOR GTM laufen, damit Tags
+       (GA4/Ads) vor der Einwilligung nur cookieless senden. Usercentrics setzt
+       den Status nach Einwilligung per 'update' auf granted. -->
+  <script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',functionality_storage:'denied',personalization_storage:'denied',security_storage:'granted',wait_for_update:2000});
+  </script>
   <script id="usercentrics-cmp" src="https://web.cmp.usercentrics.eu/ui/loader.js" data-settings-id="i-OW_OGmKJjg4h" async></script>
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
