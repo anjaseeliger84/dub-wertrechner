@@ -1,5 +1,6 @@
 *.docx
 *.png
+*.svg
 *.html
 !index.html
 .claude
@@ -7,3 +8,4 @@
 *.pdf
 .DS_Store
 .git
+DUB LOGO/
