@@ -1,5 +1,6 @@
 *.docx
 *.png
+!sig-dealcircle.png
 *.svg
 *.html
 !index.html
